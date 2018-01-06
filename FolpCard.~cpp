@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------
-
+#include <string>
 #include <vcl.h>
 #pragma hdrstop
 
@@ -53,7 +53,7 @@ void TForm1::img_defalt(){
         if(!id[15]) Image16->Picture->LoadFromFile("cardback.bmp");
 }
 //---------------------------------------------------------------------------
-int tm=1,score=0,touch_time=0;
+int tm=60,score=0,touch_time=0;
 
 
 String loc[4]={"card1.bmp","card2.bmp","card3.bmp","card4.bmp"};
@@ -277,8 +277,10 @@ void TForm1::time_chk(){
                 }
         }
         if(full_chk) {
+                String str="Your score:"+ IntToStr(score);
                 Timer1->Enabled=false;
-                Application->MessageBox("Your score:"+score, "Congratulation", 0);
+                Label4->Caption=score;
+                Application->MessageBox(str.c_str(), "Congratulation", 0);
                 re();
         }
         else {
@@ -299,7 +301,7 @@ void __fastcall TForm1::Timer2Timer(TObject *Sender)
         }
 }
 
-void re(){
+void TForm1::re(){
         tm=60;
         score=0;
         Label2->Caption=tm;
@@ -307,6 +309,7 @@ void re(){
         for(int x=0;x<16;x++){
                 id[x]=false;
         }
+        img_defalt();
         disab();
 }
 //---------------------------------------------------------------------------

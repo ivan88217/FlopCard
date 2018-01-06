@@ -60,6 +60,9 @@ String loc[4]={"card1.bmp","card2.bmp","card3.bmp","card4.bmp"};
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
         randomize();
+        MediaPlayer1->FileName="music.mp3";
+        MediaPlayer1->Open();
+        MediaPlayer1->Play();
         Label2->Caption=tm;
         Label4->Caption=score;
         ran();
@@ -311,6 +314,19 @@ void TForm1::re(){
         }
         img_defalt();
         disab();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Timer3Timer(TObject *Sender)
+{
+        if (MediaPlayer1->Position==MediaPlayer1->TrackLength[1])
+        MediaPlayer1->Play();        
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
+{
+        MediaPlayer1->Close();
 }
 //---------------------------------------------------------------------------
 

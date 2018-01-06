@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 227
-  Top = 106
+  Left = 190
+  Top = 132
   Width = 414
   Height = 658
   Caption = 'Form1'
@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -159,24 +160,26 @@ object Form1: TForm1
     OnClick = Image16Click
   end
   object Label1: TLabel
-    Left = 16
+    Left = 8
     Top = 8
-    Width = 33
+    Width = 32
     Height = 13
+    AutoSize = False
     Caption = #26178#38291
   end
   object Label2: TLabel
-    Left = 56
+    Left = 48
     Top = 8
     Width = 32
     Height = 13
     Caption = 'Label2'
   end
   object Label3: TLabel
-    Left = 112
+    Left = 104
     Top = 8
     Width = 32
     Height = 13
+    AutoSize = False
     Caption = #20998#25976
   end
   object Label4: TLabel
@@ -204,6 +207,15 @@ object Form1: TForm1
     TabOrder = 1
     OnClick = Button2Click
   end
+  object MediaPlayer1: TMediaPlayer
+    Left = 120
+    Top = 584
+    Width = 253
+    Height = 30
+    ColoredButtons = [btPlay, btPause, btStop]
+    Display = MediaPlayer1
+    TabOrder = 2
+  end
   object Timer1: TTimer
     Enabled = False
     OnTimer = Timer1Timer
@@ -214,6 +226,11 @@ object Form1: TForm1
     Interval = 250
     OnTimer = Timer2Timer
     Left = 32
+    Top = 592
+  end
+  object Timer3: TTimer
+    OnTimer = Timer3Timer
+    Left = 64
     Top = 592
   end
 end
