@@ -15,9 +15,9 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 }
 //---------------------------------------------------------------------------
 int rnd[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};//儲存隨機值
-bool id[16]={false};
+bool id[16]={false};  //確認是否是已經正確的
 void TForm1::ran(){
-        //隨機且不重複
+        //隨機且不重複分配給16個IMAGE
          for(int i=0;i<16;i++){
                 do{
                         int x=0;
@@ -35,6 +35,7 @@ void TForm1::ran(){
 }
 
 void TForm1::img_defalt(){
+        //重設圖片 如果已經是正確的則不重設
         if(!id[0]) Image1->Picture->LoadFromFile("cardback.bmp");
         if(!id[1]) Image2->Picture->LoadFromFile("cardback.bmp");
         if(!id[2]) Image3->Picture->LoadFromFile("cardback.bmp");
@@ -59,23 +60,30 @@ int tm=60,score=0,touch_time=0;
 String loc[4]={"card1.bmp","card2.bmp","card3.bmp","card4.bmp"};
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
-        randomize();
+        randomize();    //亂數種子
+
+        //自動撥放音樂
         MediaPlayer1->FileName="music.mp3";
         MediaPlayer1->Open();
         MediaPlayer1->Play();
+
+        //顯示
         Label2->Caption=tm;
         Label4->Caption=score;
-        ran();
-        img_defalt();
+
+        ran(); //產生變數
+        img_defalt(); //載入圖片
         disab();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::Timer1Timer(TObject *Sender)
 {
+        //時間
         tm--;
         Label2->Caption= tm;
         if(tm==0){
+        //時間到  並且提示 之後重設
         Timer1->Enabled=false;
         Application->MessageBox("Time up", "Caution", 0);
         re();
@@ -83,6 +91,7 @@ void __fastcall TForm1::Timer1Timer(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 void TForm1::enab(){
+        //如果已經為正確的就不能再按了
         if(!id[0]) Image1->Enabled=true;
         if(!id[1]) Image2->Enabled=true;
         if(!id[2]) Image3->Enabled=true;
@@ -102,6 +111,7 @@ void TForm1::enab(){
         Timer1->Enabled=true;
 }
 void TForm1::disab(){
+        //禁止按圖片
         Image1->Enabled=false;
         Image2->Enabled=false;
         Image3->Enabled=false;
@@ -122,13 +132,13 @@ void TForm1::disab(){
 }
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-        enab();
+        enab();  //開始
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
-        disab();
+        disab();     //暫停
 }
 //---------------------------------------------------------------------------
 
@@ -245,6 +255,9 @@ void __fastcall TForm1::Image16Click(TObject *Sender)
 //---------------------------------------------------------------------------
 int chk[2]={0,0};
 void TForm1::touch(int a){
+        //確認是否按下2次
+        //a表示當次按下的圖片編號
+        //chk為儲存這2次所按下的編號
         touch_time++;
         if(touch_time == 1){
                 chk[0]=a;
@@ -260,6 +273,7 @@ void TForm1::touch(int a){
 }
 int counter=0;
 void TForm1::time_chk(){
+        //確認是否2個是一樣的
         if(rnd[chk[0]]/4==rnd[chk[1]]/4){
                 id[chk[0]]=true;
                 id[chk[1]]=true;
@@ -274,12 +288,15 @@ void TForm1::time_chk(){
                 Timer2->Enabled=true;
         }
         bool full_chk=true;
+
+        //確認是否結束
         for(int z=0;z<16;z++){
                 if(id[z]==false){
                         full_chk=false;
                 }
         }
         if(full_chk) {
+                //如果已經結束了便提示 並且重設
                 String str="Your score:"+ IntToStr(score);
                 Timer1->Enabled=false;
                 Label4->Caption=score;
@@ -287,6 +304,7 @@ void TForm1::time_chk(){
                 re();
         }
         else {
+                //沒結束就繼續
                 Timer1->Enabled=true;
         }
         Label4->Caption=score;
@@ -295,6 +313,7 @@ void TForm1::time_chk(){
 
 void __fastcall TForm1::Timer2Timer(TObject *Sender)
 {
+        //圖片延遲消失
         counter++;
         if(counter==3){
                 counter=0;
@@ -305,6 +324,7 @@ void __fastcall TForm1::Timer2Timer(TObject *Sender)
 }
 
 void TForm1::re(){
+        //重新設置變數
         tm=60;
         score=0;
         Label2->Caption=tm;
@@ -319,6 +339,7 @@ void TForm1::re(){
 
 void __fastcall TForm1::Timer3Timer(TObject *Sender)
 {
+        //音樂重複撥放
         if (MediaPlayer1->Position==MediaPlayer1->TrackLength[1])
         MediaPlayer1->Play();        
 }
@@ -326,6 +347,7 @@ void __fastcall TForm1::Timer3Timer(TObject *Sender)
 
 void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
 {
+        //關閉音樂
         MediaPlayer1->Close();
 }
 //---------------------------------------------------------------------------

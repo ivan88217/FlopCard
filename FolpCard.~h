@@ -8,6 +8,7 @@
 #include <StdCtrls.hpp>
 #include <Forms.hpp>
 #include <ExtCtrls.hpp>
+#include <MPlayer.hpp>
 //---------------------------------------------------------------------------
 
 class TForm1 : public TForm
@@ -37,6 +38,8 @@ __published:	// IDE-managed Components
         TButton *Button1;
         TButton *Button2;
         TTimer *Timer2;
+        TMediaPlayer *MediaPlayer1;
+        TTimer *Timer3;
         void __fastcall FormCreate(TObject *Sender);
         void __fastcall Timer1Timer(TObject *Sender);
         void __fastcall Button1Click(TObject *Sender);
@@ -58,6 +61,8 @@ __published:	// IDE-managed Components
         void __fastcall Image15Click(TObject *Sender);
         void __fastcall Image16Click(TObject *Sender);
         void __fastcall Timer2Timer(TObject *Sender);
+        void __fastcall Timer3Timer(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 private:	// User declarations
 public:		// User declarations
         void enab();
